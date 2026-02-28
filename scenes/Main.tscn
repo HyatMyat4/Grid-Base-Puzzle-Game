@@ -1,0 +1,50 @@
+[gd_scene format=4 uid="uid://yiwrjl7rhnjn"]
+
+[ext_resource type="Script" uid="uid://ch43ugwytbita" path="res://scenes/Main.cs" id="1_elqb8"]
+[ext_resource type="TileSet" uid="uid://plmpdej3n5y1" path="res://resources/tiles.tres" id="2_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://bwmh7y2nhda8" path="res://scenes/manager/GridManager.tscn" id="2_rarhs"]
+[ext_resource type="TileSet" uid="uid://c287lj1rsirew" path="res://resources/highlight_tileset.tres" id="2_rvslj"]
+[ext_resource type="PackedScene" uid="uid://dil0ofaa7rmt0" path="res://scenes/building/Base.tscn" id="3_vcsgt"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_elqb8"]
+size = Vector2(64, 64)
+
+[node name="Main" type="Node" unique_id=1917862143]
+script = ExtResource("1_elqb8")
+
+[node name="GridManager" parent="." unique_id=1190061845 node_paths=PackedStringArray("hightlightTileMapLayer", "baseTerrainTileMapLayer") instance=ExtResource("2_rarhs")]
+hightlightTileMapLayer = NodePath("../HighlightTileMapLayer")
+baseTerrainTileMapLayer = NodePath("../YSortRoot/BaseTerrainTileMapLayer")
+
+[node name="YSortRoot" type="Node2D" parent="." unique_id=780508133]
+y_sort_enabled = true
+
+[node name="BaseTerrainTileMapLayer" type="TileMapLayer" parent="YSortRoot" unique_id=103924607]
+y_sort_enabled = true
+position = Vector2(-2, 0)
+tile_map_data = PackedByteArray("AAAIAAUAAgAGAAEAAAAJAAUAAgAGAAEAAAAKAAUAAgAGAAEAAAAKAAQAAgAGAAEAAAAJAAQAAgAGAAEAAAALAAQAAgAGAAEAAAAMAAQAAgAGAAEAAAANAAQAAgAGAAEAAAAMAAUAAgAGAAEAAAALAAUAAgAGAAEAAAAMAAMAAgAGAAEAAAAMAAIAAgAGAAEAAAAMAAEAAgAGAAAAAAALAAEAAgAGAAAAAAALAAIAAgAGAAEAAAALAAMAAgAGAAEAAAANAAIAAgAHAAEAAAANAAMAAgAGAAEAAAAOAAMAAgAHAAAAAAAOAAQAAgAGAAEAAAAOAAUAAgAGAAEAAAAPAAUAAgAGAAEAAAAPAAYAAgAGAAEAAAAQAAYAAgAGAAEAAAAQAAcAAgAGAAEAAAARAAcAAgAHAAEAAAARAAYAAgAHAAAAAAARAAgAAgAHAAEAAAARAAkAAgAHAAIAAAAQAAkAAgAGAAEAAAAPAAkAAgAGAAEAAAAOAAkAAgAGAAEAAAANAAkAAgAGAAIAAAAMAAkAAgAFAAIAAAAMAAgAAgAGAAEAAAALAAgAAgAGAAIAAAAKAAgAAgAGAAIAAAAJAAgAAgAGAAEAAAAJAAkAAgAHAAIAAAAIAAkAAgAGAAIAAAAHAAkAAgAGAAIAAAAHAAgAAgAGAAEAAAAGAAgAAgAGAAEAAAAFAAgAAgAGAAEAAAAFAAcAAgAGAAEAAAAFAAYAAgAGAAEAAAAGAAYAAgAGAAEAAAAHAAYAAgAGAAEAAAAHAAUAAgAGAAEAAAAQAAgAAgAGAAEAAAAPAAgAAgAGAAEAAAAPAAcAAgAGAAEAAAAOAAgAAgAGAAEAAAAOAAcAAgAGAAEAAAAOAAYAAgAGAAEAAAANAAgAAgAGAAEAAAANAAcAAgAGAAEAAAANAAYAAgAGAAEAAAAMAAcAAgAGAAEAAAAMAAYAAgAGAAEAAAALAAcAAgAGAAEAAAALAAYAAgAGAAEAAAAKAAcAAgAGAAEAAAAKAAYAAgAGAAEAAAAJAAcAAgAGAAEAAAAJAAYAAgAGAAEAAAAIAAgAAgAGAAEAAAAIAAcAAgAGAAEAAAAIAAYAAgAGAAEAAAAHAAcAAgAGAAEAAAAGAAcAAgAGAAEAAAAKAAMAAgAGAAEAAAAKAAIAAgAGAAEAAAAJAAMAAgAGAAEAAAAQAAUAAgAHAAAAAAAEAAgAAgAFAAIAAAAEAAcAAgAFAAEAAAAEAAYAAgAFAAEAAAAGAAkAAgAGAAIAAAAOAAoAAgAFAAIAAAAPAAoAAgAGAAIAAAAQAAoAAgAHAAIAAAAGAAUAAgAGAAEAAAAFAAUAAgAGAAEAAAAEAAUAAgAFAAAAAAAFAAkAAgAFAAIAAAANAAUAAgAGAAEAAAAIAAQAAgAGAAEAAAAHAAQAAgAGAAEAAAAGAAQAAgAGAAEAAAAFAAQAAgAFAAAAAAAGAAMAAgAFAAAAAAAHAAMAAgAGAAAAAAAIAAMAAgAGAAAAAAAJAAIAAgAFAAAAAAAKAAEAAgAFAAAAAAANAAEAAgAHAAAAAAAPAAQAAgAHAAAAAAA=")
+tile_set = ExtResource("2_0bbpv")
+
+[node name="ResourceTileMapLayer" type="TileMapLayer" parent="YSortRoot/BaseTerrainTileMapLayer" unique_id=1297107032]
+y_sort_enabled = true
+position = Vector2(2, 0)
+tile_map_data = PackedByteArray("AAAOAAMAAAAAAAAAAAALAAEAAAAAAAAAAAAJAAMAAAAAAAAAAAAEAAUAAAAAAAAAAAAMAAEAAAAAAAAAAAALAAIAAAAAAAAAAAAMAAIAAAAAAAAAAAAKAAIAAAAAAAAAAAANAAIAAAAAAAAAAAAIAAQAAAAAAAAAAAAHAAQAAAAAAAAAAAAGAAQAAAAAAAAAAAAFAAQAAAAAAAAAAAANAAQAAAAAAAAAAAAMAAMAAAAAAAAAAAALAAMAAAAAAAAAAAAKAAQAAAAAAAAAAAA=")
+tile_set = ExtResource("2_0bbpv")
+
+[node name="Base" parent="YSortRoot" unique_id=1447881471 instance=ExtResource("3_vcsgt")]
+position = Vector2(768, 448)
+
+[node name="HighlightTileMapLayer" type="TileMapLayer" parent="." unique_id=1378520579]
+modulate = Color(1, 1, 1, 0.5176471)
+tile_set = ExtResource("2_rvslj")
+
+[node name="Cursor" type="Sprite2D" parent="." unique_id=1031995055]
+texture = SubResource("PlaceholderTexture2D_elqb8")
+centered = false
+
+[node name="PlaceBuildingButton" type="Button" parent="." unique_id=81425737]
+offset_left = 5.0
+offset_top = 685.0
+offset_right = 122.0
+offset_bottom = 716.0
+text = "Place Building"

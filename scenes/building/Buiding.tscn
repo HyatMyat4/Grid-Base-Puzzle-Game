@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dyipqh8b3b0j3"]
+
+[ext_resource type="PackedScene" uid="uid://cs6j8u31r07so" path="res://scenes/component/BuildingComponent.tscn" id="1_1f6up"]
+[ext_resource type="Texture2D" uid="uid://cmdl5hrnhswlq" path="res://asssets/buildings/Blue Buildings/Tower.png" id="1_mb4xc"]
+
+[node name="Buiding" type="Node2D" unique_id=1074383449]
+y_sort_enabled = true
+
+[node name="BuildingComponent" parent="." unique_id=647751282 instance=ExtResource("1_1f6up")]
+BuildableRadius = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=358867869]
+position = Vector2(32, 32)
+texture = ExtResource("1_mb4xc")
+centered = false
+offset = Vector2(-64, -204)
