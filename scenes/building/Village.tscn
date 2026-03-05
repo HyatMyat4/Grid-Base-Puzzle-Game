@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://vi5icbpdo5ei"]
+
+[ext_resource type="PackedScene" uid="uid://cs6j8u31r07so" path="res://scenes/component/BuildingComponent.tscn" id="1_4iy7f"]
+[ext_resource type="PackedScene" uid="uid://biti1hfno4xqa" path="res://scenes/building/sprite/VillageSprite2D.tscn" id="2_4iy7f"]
+
+[node name="Village" type="Node2D" unique_id=297312944]
+y_sort_enabled = true
+
+[node name="BuildingComponent" parent="." unique_id=647751282 instance=ExtResource("1_4iy7f")]
+buildingResourcePath = "uid://ji28p8kg2m1w"
+
+[node name="VillageSprite2D" parent="." unique_id=1525278488 instance=ExtResource("2_4iy7f")]
+position = Vector2(32, 32)

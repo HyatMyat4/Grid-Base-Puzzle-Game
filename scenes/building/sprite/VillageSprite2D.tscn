@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://biti1hfno4xqa"]
+
+[ext_resource type="Texture2D" uid="uid://bg0x3erjrqi3v" path="res://asssets/buildings/Blue Buildings/House_Blue.png" id="1_rf1xd"]
+
+[node name="VillageSprite2D" type="Sprite2D" unique_id=1525278488]
+y_sort_enabled = true
+position = Vector2(32, 32)
+texture = ExtResource("1_rf1xd")
+centered = false
+offset = Vector2(-64, -140)

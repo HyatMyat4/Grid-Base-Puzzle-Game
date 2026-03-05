@@ -1,4 +1,5 @@
 using Game.Autoload;
+using Game.Resources.Building;
 using Godot;
 
 namespace Game.Component;
@@ -6,12 +7,18 @@ namespace Game.Component;
 public partial class BuildingComponent : Node2D
 {
 
-	[Export]
-	public int BuildableRadius { get; private set; }
+	[Export(PropertyHint.File, "*tres")]
+	public string buildingResourcePath;
 
-	// Called when the node enters the scene tree for the first time.
+	public BuildingResource BuildingResource { get; private set; }
+
+
 	public override void _Ready()
 	{
+		if (buildingResourcePath != null)
+		{
+			BuildingResource = GD.Load<BuildingResource>(buildingResourcePath);
+		}
 		AddToGroup(nameof(BuildingComponent));
 		Callable.From(() => GameEvent.EmitBuildingPlaced(this)).CallDeferred();
 	}
