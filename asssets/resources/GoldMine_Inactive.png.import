@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2m03mmhw4e27"
-path="res://.godot/imported/Foam.png-1296adffc561dc818df5ccc287b47924.ctex"
+uid="uid://dkylq4wc7ym2"
+path="res://.godot/imported/GoldMine_Inactive.png-c2f46e125315582bbcbc85aaec89c633.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asssets/tiles/Foam.png"
-dest_files=["res://.godot/imported/Foam.png-1296adffc561dc818df5ccc287b47924.ctex"]
+source_file="res://asssets/resources/GoldMine_Inactive.png"
+dest_files=["res://.godot/imported/GoldMine_Inactive.png-c2f46e125315582bbcbc85aaec89c633.ctex"]
 
 [params]
 

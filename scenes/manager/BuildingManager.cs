@@ -1,8 +1,10 @@
 using Game.Building;
+using Game.Component;
 using Game.Resources.Building;
 using Game.UI;
 using Godot;
 using System;
+using System.Linq;
 using System.Numerics;
 namespace Game.Manager;
 
@@ -65,7 +67,7 @@ public partial class BuildingManager : Node
 			case State.PlacingBuilding:
 				if (evt.IsActionPressed(ACTION_CANCEL))
 				{
-					ClearBuildingGhost();
+					ChangeState(State.Normal);
 				}
 				else if (
 					  toPlaceBuildingResource != null &&
@@ -87,27 +89,39 @@ public partial class BuildingManager : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (!IsInstanceValid(buildingGhost)) return;
-		var gridPosition = gridManager.getMouseGridPosition();
-		buildingGhost.GlobalPosition = gridPosition * 64;
-		if (toPlaceBuildingResource != null && mouseGridCellPosition != gridPosition)
-		{
-			mouseGridCellPosition = gridPosition;
-			updateGridDisplay();
 
+		if (buildingGhost != null)
+		{
+			var gridPosition = gridManager.getMouseGridPosition();
+
+			if (toPlaceBuildingResource != null && mouseGridCellPosition != gridPosition)
+			{
+				mouseGridCellPosition = gridPosition;
+
+				UpdateHoverGridCell();
+
+			}
+
+			switch (currentState)
+			{
+				case State.Normal:
+					break;
+				case State.PlacingBuilding:
+
+					buildingGhost.GlobalPosition = gridPosition * 64;
+					break;
+			}
 		}
 	}
 
 	private void updateGridDisplay()
 	{
-
-		if (mouseGridCellPosition == null) return;
 		gridManager.ClearHighlightedTiles();
 		gridManager.HightlightBuildableTiles();
-		if (IsBuildingPlaceableAtTile(mouseGridCellPosition.Value))
+		if (IsBuildingPlaceableAtTile(mouseGridCellPosition))
 		{
-			gridManager.HightlightExpandedBuildableTiles(mouseGridCellPosition.Value, toPlaceBuildingResource.BuildableRadius);
-			gridManager.HightlightResourceTiles(mouseGridCellPosition.Value, toPlaceBuildingResource.BuildableRadius);
+			gridManager.HightlightExpandedBuildableTiles(mouseGridCellPosition, toPlaceBuildingResource.BuildableRadius);
+			gridManager.HightlightResourceTiles(mouseGridCellPosition, toPlaceBuildingResource.BuildableRadius);
 			buildingGhost.SetValid();
 		}
 		else
@@ -119,28 +133,31 @@ public partial class BuildingManager : Node
 	private void PlacedBuildingAtMousePosition()
 	{
 		{
-			if (!mouseGridCellPosition.HasValue) return;
+
 
 			Node2D building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
 			ySortRoot.AddChild(building);
 
-			Vector2I gridPosition = mouseGridCellPosition.Value;
+			Vector2I gridPosition = mouseGridCellPosition;
 			building.GlobalPosition = gridPosition * 64;
 
 
 			currentlyUsedResourceCount += toPlaceBuildingResource.ResourceCost;
-			ClearBuildingGhost();
+			ChangeState(State.Normal);
 		}
 	}
 
 	private void DestoryBuildingAtMousePosition()
 	{
+		var buildingComponent = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>().FirstOrDefault((buildingComponent) => buildingComponent.GetGridCellPosition() == mouseGridCellPosition);
+		if (buildingComponent == null) return;
 
+		currentResourceCount += buildingComponent.BuildingResource.ResourceCost;
+		buildingComponent.Distory();
 	}
 
 	private void ClearBuildingGhost()
 	{
-		mouseGridCellPosition = null;
 		gridManager.ClearHighlightedTiles();
 		if (IsInstanceValid(buildingGhost))
 		{
@@ -156,6 +173,44 @@ public partial class BuildingManager : Node
 			 AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
 	}
 
+	private void UpdateHoverGridCell()
+	{
+		switch (currentState)
+		{
+			case State.Normal:
+				break;
+			case State.PlacingBuilding:
+				updateGridDisplay();
+				break;
+		}
+	}
+
+	private void ChangeState(State toState)
+	{
+		switch (currentState)
+		{
+			case State.Normal:
+				break;
+			case State.PlacingBuilding:
+				ClearBuildingGhost();
+				toPlaceBuildingResource = null;
+				break;
+		}
+
+		currentState = toState;
+
+		switch (currentState)
+		{
+			case State.Normal:
+				break;
+			case State.PlacingBuilding:
+				buildingGhost = buildingGhostScene.Instantiate<BuildingGhost>();
+				ySortRoot.AddChild(buildingGhost);
+				break;
+		}
+
+	}
+
 	private void OnResourceTilesUpdated(int resourceCount)
 	{
 		currentResourceCount = resourceCount;
@@ -163,16 +218,8 @@ public partial class BuildingManager : Node
 
 	private void OnBuildingResourceSelected(BuildingResource buildingResource)
 	{
-		// If already exists, remove it first
-		if (buildingGhost != null && IsInstanceValid(buildingGhost))
-		{
-			buildingGhost.QueueFree();
-			buildingGhost = null;
-		}
 
-		buildingGhost = buildingGhostScene.Instantiate<BuildingGhost>();
-		ySortRoot.AddChild(buildingGhost);
-
+		ChangeState(State.PlacingBuilding);
 		var buildingSprite = buildingResource.SpriteScene.Instantiate<Sprite2D>();
 		buildingGhost.AddChild(buildingSprite);
 

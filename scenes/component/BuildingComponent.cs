@@ -29,4 +29,11 @@ public partial class BuildingComponent : Node2D
 		gridPosition = gridPosition.Floor();
 		return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
 	}
+
+	public void Distory()
+	{
+		GameEvent.EmitBuildingDestroyed(this);
+		Owner.QueueFree();
+	}
 }
+
