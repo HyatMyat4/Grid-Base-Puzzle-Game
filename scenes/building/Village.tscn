@@ -10,4 +10,5 @@ y_sort_enabled = true
 buildingResourcePath = "uid://ji28p8kg2m1w"
 
 [node name="VillageSprite2D" parent="." unique_id=1525278488 instance=ExtResource("2_4iy7f")]
-position = Vector2(32, 32)
+position = Vector2(64, 64)
+offset = Vector2(-64, -172)

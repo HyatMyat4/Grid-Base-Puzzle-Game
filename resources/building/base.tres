@@ -6,6 +6,8 @@
 [resource]
 script = ExtResource("1_e73lx")
 Displayname = "Base"
+IsDeletable = false
+Dimensions = Vector2i(5, 2)
 BuildableRadius = 3
 BuildingScene = ExtResource("1_fkueu")
 metadata/_custom_type_script = "uid://kxto8iixsvax"
