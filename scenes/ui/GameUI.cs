@@ -13,24 +13,27 @@ public partial class GameUI : CanvasLayer
 	[Export]
 	private BuildingResource[] buildingResources;
 
-	private HBoxContainer hBoxContainer;
+	[Export]
+	private PackedScene buildingSectionScene;
+
+	private VBoxContainer buildingSectionContainer;
 
 
 	public override void _Ready()
 	{
-		hBoxContainer = GetNode<HBoxContainer>("MarginContainer/HBoxContainer");
-		createBuildingButtons();
+		buildingSectionContainer = GetNode<VBoxContainer>("%BuildingSectionContainer");
+		CreateBuildingSections();
 	}
 
-	private void createBuildingButtons()
+	private void CreateBuildingSections()
 	{
 		foreach (var buildingResource in buildingResources)
 		{
-			var buildingButton = new Button();
-			buildingButton.Text = $"Place {buildingResource.Displayname}";
-			hBoxContainer.AddChild(buildingButton);
+			var buildingSection = buildingSectionScene.Instantiate<BuildingSection>();
+			buildingSectionContainer.AddChild(buildingSection);
+			buildingSection.SetBuildingResource(buildingResource);
 
-			buildingButton.Pressed += () =>
+			buildingSection.SelectButtonPressed += () =>
 			{
 				EmitSignal(SignalName.BuildingResourceSelected, buildingResource);
 			};

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://iuar8leopoi2"]
+
+[ext_resource type="Theme" uid="uid://bsoo6v6wsrend" path="res://resources/theme.tres" id="1_kclk6"]
+[ext_resource type="Script" uid="uid://d5u68y1pc1wr" path="res://scenes/ui/BuildingSection.cs" id="2_2t8co"]
+
+[node name="BuildingSection" type="PanelContainer" unique_id=2055858737]
+theme = ExtResource("1_kclk6")
+theme_type_variation = &"PanelContainerAlternate"
+script = ExtResource("2_2t8co")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=436819949]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=18178274]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Village"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=833428514]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Select (Cost 4)"
