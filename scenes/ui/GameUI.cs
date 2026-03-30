@@ -28,8 +28,6 @@ public partial class GameUI : CanvasLayer
 
 
 		buildingSectionContainer = GetNode<VBoxContainer>("%BuildingSectionContainer");
-
-
 		resourceLabel = GetNode<Label>("%ResourceLabel");
 		CreateBuildingSections();
 		buildingManager.AvailableResourceCountChanged += OnAvailableResourceCountChange;

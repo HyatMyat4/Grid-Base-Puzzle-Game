@@ -26,6 +26,8 @@ public partial class GridManager : Node
 
 	private HashSet<Vector2I> collectedResourceTiles = new HashSet<Vector2I>();
 
+	private HashSet<Vector2I> allTilesInBuildingRadius = new HashSet<Vector2I>();
+
 	private HashSet<Vector2I> occupiedTiles = new HashSet<Vector2I>();
 
 	[Export]
@@ -42,8 +44,9 @@ public partial class GridManager : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GameEvent.Instance.BuildingPlaced += OnBuildingPlaced;
-		GameEvent.Instance.BuildingDestroyed += OnBuildingDestoryed;
+
+		GameEvent.Instance.Connect(GameEvent.SignalName.BuildingPlaced, Callable.From<BuildingComponent>(OnBuildingPlaced));
+		GameEvent.Instance.Connect(GameEvent.SignalName.BuildingDestroyed, Callable.From<BuildingComponent>(OnBuildingDestoryed));
 		allTilemapLayers = GetAllTilemaplayers(baseTerrainTileMapLayer);
 		MapTileMapLayersToElevationLayers();
 
@@ -71,6 +74,11 @@ public partial class GridManager : Node
 		return vaildBuildableTiles.Contains(tilePosition);
 	}
 
+	public bool IsTilePositionInAnyBuildingRadius(Vector2I tilePosition)
+	{
+		return allTilesInBuildingRadius.Contains(tilePosition);
+	}
+
 	public bool IsTileAreaBuildable(Rect2I tileArea)
 	{
 		var tiles = tileArea.ToTiles();
@@ -78,12 +86,12 @@ public partial class GridManager : Node
 		if (tiles.Count == 0) return false;
 
 		(TileMapLayer firstTileMapLayer, _) = GetTileCustomData(tiles[0], IS_BUILDABLE);
-		var targetElevationLayer = tileMapLayerToElevationLayer[firstTileMapLayer];
+		var targetElevationLayer = firstTileMapLayer != null ? tileMapLayerToElevationLayer[firstTileMapLayer] : null;
 
 		return tiles.All((tilePosition) =>
 		{
 			(TileMapLayer tileMapLayer, bool isBuildable) = GetTileCustomData(tilePosition, IS_BUILDABLE);
-			var elevationLayer = tileMapLayerToElevationLayer[tileMapLayer];
+			var elevationLayer = tileMapLayer != null ? tileMapLayerToElevationLayer[tileMapLayer] : null;
 			return isBuildable && vaildBuildableTiles.Contains(tilePosition) && elevationLayer == targetElevationLayer;
 		});
 	}
@@ -161,6 +169,8 @@ public partial class GridManager : Node
 	{
 		occupiedTiles.UnionWith(buildingComponent.GetOccupiedCellPosition());
 		var tileArea = new Rect2I(buildingComponent.GetGridCellPosition(), buildingComponent.BuildingResource.Dimensions);
+		var allTiles = GetTilesInRadius(tileArea, buildingComponent.BuildingResource.BuildableRadius, (_) => true);
+		allTilesInBuildingRadius.UnionWith(allTiles);
 		var validTiles = GetVaildTilesInRadius(tileArea, buildingComponent.BuildingResource.BuildableRadius);
 		vaildBuildableTiles.UnionWith(validTiles);
 		vaildBuildableTiles.ExceptWith(occupiedTiles);
@@ -187,6 +197,8 @@ public partial class GridManager : Node
 	{
 		occupiedTiles.Clear();
 		vaildBuildableTiles.Clear();
+		allTilesInBuildingRadius.Clear();
+
 		var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>().Where((buildingComponent) => buildingComponent != excludeBuildingComponent);
 		foreach (var buildingComponent in buildingComponents)
 		{

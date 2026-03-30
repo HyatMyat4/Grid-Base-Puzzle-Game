@@ -11,8 +11,6 @@ public partial class LevelCompleteScreen : CanvasLayer
 		nextLevelButton = GetNode<Button>("%NextLevenButton");
 
 		nextLevelButton.Pressed += OnNextLevelButtonPressed;
-
-
 	}
 
 	private void OnNextLevelButtonPressed()

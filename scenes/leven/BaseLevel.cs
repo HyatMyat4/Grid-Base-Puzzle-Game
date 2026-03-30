@@ -40,7 +40,7 @@ public partial class BaseLevel : Node
 	private void OnGridStateUpdate()
 	{
 		var goldMineTilePosition = gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition);
-		if (gridManager.IsTilePositionBuildable(goldMineTilePosition))
+		if (gridManager.IsTilePositionInAnyBuildingRadius(goldMineTilePosition))
 		{
 			var levenCompleteScreen = levenCompleteScreenScene.Instantiate<LevenCompleteScreen>();
 			AddChild(levenCompleteScreen);
