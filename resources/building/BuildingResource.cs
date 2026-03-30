@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Godot;
 
 namespace Game.Resources.Building;
@@ -5,6 +6,13 @@ namespace Game.Resources.Building;
 [GlobalClass]
 public partial class BuildingResource : Resource
 {
+
+	[Export]
+	public string DisplayNameAttribute { get; private set; }
+
+	[Export]
+	public string Description { get; private set; }
+
 	[Export]
 	public string Displayname { get; private set; }
 

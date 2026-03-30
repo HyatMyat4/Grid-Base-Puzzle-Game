@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://b6a2i4rnbog0k"]
+
+[ext_resource type="Theme" uid="uid://bsoo6v6wsrend" path="res://resources/theme.tres" id="1_elp4n"]
+[ext_resource type="Texture2D" uid="uid://dgxyhm3www6aa" path="res://asssets/ui/ribbon_red_three_slides.png" id="2_w172c"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8r1k8"]
+texture = ExtResource("2_w172c")
+texture_margin_left = 64.0
+texture_margin_right = 64.0
+texture_margin_bottom = 3.0
+axis_stretch_horizontal = 1
+
+[node name="LevelCompleteScreen" type="CanvasLayer" unique_id=1762281237]
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1648043454]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_elp4n")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1768531417]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RibbonContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=676596663]
+custom_minimum_size = Vector2(256, 61)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_8r1k8")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/RibbonContainer" unique_id=1370339912]
+layout_mode = 2
+text = "LEVEN COMPLETE"
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=451824137]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/PanelContainer" unique_id=916527693]
+layout_mode = 2
+text = "Next Leven"

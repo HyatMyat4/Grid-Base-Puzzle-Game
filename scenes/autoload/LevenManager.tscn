@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://jtq2mku7h6g5"]
+
+[ext_resource type="Script" uid="uid://d4b1bhv570lq2" path="res://scenes/autoload/LevenManager.cs" id="1_amqpj"]
+[ext_resource type="PackedScene" uid="uid://cqsjm1bbk4qh8" path="res://scenes/leven/Level1.tscn" id="2_yfegf"]
+
+[node name="LevenManager" type="Node" unique_id=568533014]
+script = ExtResource("1_amqpj")
+levenScenes = Array[PackedScene]([ExtResource("2_yfegf"), ExtResource("2_yfegf")])

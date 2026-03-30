@@ -58,10 +58,7 @@ public partial class GridManager : Node
 			{
 				continue;
 			}
-
 			var value = customData.GetCustomData(dataName);
-
-
 			return (layer, (bool)value);
 		}
 
@@ -174,9 +171,11 @@ public partial class GridManager : Node
 	{
 		var tileArea = new Rect2I(buildingComponent.GetGridCellPosition(), buildingComponent.BuildingResource.Dimensions);
 		var resourcetiles = GetResourceTilesInRadius(tileArea, buildingComponent.BuildingResource.ResourceRadius);
+		GD.Print($"ResourceTiles Count: {resourcetiles.Count}");
 		var oldResourceTileCount = collectedResourceTiles.Count;
-		GD.Print(oldResourceTileCount, collectedResourceTiles.Count);
+
 		collectedResourceTiles.UnionWith(resourcetiles);
+
 		if (oldResourceTileCount != collectedResourceTiles.Count)
 		{
 			EmitSignal(SignalName.ResourcetilesUpdated, collectedResourceTiles.Count);
@@ -214,16 +213,33 @@ public partial class GridManager : Node
 		var tileAreaCenter = tileAreaF.GetCenter();
 		var radiusMod = Mathf.Max(tileAreaF.Size.X, tileAreaF.Size.Y) / 2;
 
+		int checkedCount = 0;
+		int insideCircleCount = 0;
+		int passedFilterCount = 0;
 
 		for (var x = tileArea.Position.X - radius; x < tileArea.End.X + radius; x++)
 		{
 			for (var y = tileArea.Position.Y - radius; y < tileArea.End.Y + radius; y++)
 			{
+				checkedCount++;
+
 				var tilePosition = new Vector2I(x, y);
-				if (!IsTileInsideCircle(tileAreaCenter, tilePosition, radius + radiusMod) || !filterFn(tilePosition)) continue;
+
+				bool insideCircle = IsTileInsideCircle(tileAreaCenter, tilePosition, radius + radiusMod);
+				if (!insideCircle) continue;
+
+				insideCircleCount++;
+
+				bool passedFilter = filterFn(tilePosition);
+				if (!passedFilter) continue;
+
+				passedFilterCount++;
+
 				result.Add(tilePosition);
+
 			}
 		}
+
 		return result;
 	}
 

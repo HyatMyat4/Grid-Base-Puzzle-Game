@@ -5,6 +5,11 @@
 [ext_resource type="Resource" uid="uid://ji28p8kg2m1w" path="res://resources/building/village.tres" id="3_xsfm0"]
 [ext_resource type="Theme" uid="uid://bsoo6v6wsrend" path="res://resources/theme.tres" id="4_xsfm0"]
 [ext_resource type="PackedScene" uid="uid://iuar8leopoi2" path="res://scenes/ui/BuildingSection.tscn" id="5_rv83x"]
+[ext_resource type="Texture2D" uid="uid://dhssqyicle33p" path="res://asssets/wood_icon.png" id="6_627l5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuuc8"]
+atlas = ExtResource("6_627l5")
+region = Rect2(39, 74, 32, 26)
 
 [node name="GameUI" type="CanvasLayer" unique_id=1131894026]
 script = ExtResource("1_r8hcy")
@@ -29,7 +34,28 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme = ExtResource("4_xsfm0")
 
-[node name="BuildingSectionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1308446894]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1860755928]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1242146101]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1527039065]
+layout_mode = 2
+size_flags_vertical = 8
+texture = SubResource("AtlasTexture_wuuc8")
+stretch_mode = 3
+
+[node name="ResourceLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=164157672]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 48
+text = "4"
+
+[node name="BuildingSectionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1308446894]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 16

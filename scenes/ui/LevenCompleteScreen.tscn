@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://c6xbg5b6dhhd8"]
+
+[ext_resource type="Script" uid="uid://cd1aymbtywexk" path="res://scenes/ui/LevenCompleteScreen.cs" id="1_oryh4"]
+[ext_resource type="Theme" uid="uid://bsoo6v6wsrend" path="res://resources/theme.tres" id="1_sw2fo"]
+[ext_resource type="Texture2D" uid="uid://dgxyhm3www6aa" path="res://asssets/ui/ribbon_red_three_slides.png" id="2_f2x68"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oryh4"]
+content_margin_top = 6.0
+content_margin_bottom = 16.0
+texture = ExtResource("2_f2x68")
+texture_margin_left = 64.0
+texture_margin_top = 13.0
+texture_margin_right = 64.0
+texture_margin_bottom = 18.0
+axis_stretch_horizontal = 1
+region_rect = Rect2(0, 0, 192, 61)
+
+[node name="LevenCompleteScreen" type="CanvasLayer" unique_id=32539135]
+script = ExtResource("1_oryh4")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=120628296]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1438334092]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = -64
+
+[node name="RabbinContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=1968273110]
+custom_minimum_size = Vector2(274, 61)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_oryh4")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/RabbinContainer" unique_id=622918380]
+layout_mode = 2
+theme = ExtResource("1_sw2fo")
+theme_override_font_sizes/font_size = 32
+text = "LEVEN COMPLETE!"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=391027115]
+show_behind_parent = true
+layout_mode = 2
+theme_override_constants/margin_left = 46
+theme_override_constants/margin_right = 46
+
+[node name="ScrollContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/MarginContainer" unique_id=1848648432]
+show_behind_parent = true
+layout_mode = 2
+theme = ExtResource("1_sw2fo")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer/ScrollContainer" unique_id=502777337]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="NextLevenButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/MarginContainer" unique_id=497951486]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Next Leven"

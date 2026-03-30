@@ -11,18 +11,20 @@ config_version=5
 [application]
 
 config/name="GridBase Puzzle"
-run/main_scene="uid://cqsjm1bbk4qh8"
+run/main_scene="uid://c6qu0hlsp7611"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameEvent="*uid://dykamqhb8kqjq"
+LevenManager="*uid://jtq2mku7h6g5"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=1
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"

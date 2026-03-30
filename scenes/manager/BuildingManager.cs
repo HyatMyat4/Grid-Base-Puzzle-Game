@@ -28,6 +28,9 @@ public partial class BuildingManager : Node
 	[Export]
 	private PackedScene buildingGhostScene;
 
+	[Signal]
+	public delegate void AvailableResourceCountChangedEventHandler(int availableResourceCount);
+
 	private enum State
 	{
 		Normal,
@@ -48,10 +51,12 @@ public partial class BuildingManager : Node
 
 	private int AvailableResourceCount => startingResourceCount + currentResourceCount - currentlyUsedResourceCount;
 
+
 	public override void _Ready()
 	{
 		gridManager.ResourcetilesUpdated += OnResourceTilesUpdated;
 		gameUI.BuildingResourceSelected += OnBuildingResourceSelected;
+		EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
 	}
 
 
@@ -77,7 +82,7 @@ public partial class BuildingManager : Node
 					  IsBuildingPlaceableAtArea(hoveredGridArea)
 					)
 				{
-					GD.Print("Left Clicked");
+
 					PlacedBuildingAtMousePosition();
 				}
 				break;
@@ -146,6 +151,8 @@ public partial class BuildingManager : Node
 
 			currentlyUsedResourceCount += toPlaceBuildingResource.ResourceCost;
 			ChangeState(State.Normal);
+
+			EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
 		}
 	}
 
@@ -161,6 +168,8 @@ public partial class BuildingManager : Node
 
 		currentResourceCount += buildingComponent.BuildingResource.ResourceCost;
 		buildingComponent.Distory();
+
+		EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
 	}
 
 	private void ClearBuildingGhost()
@@ -176,9 +185,28 @@ public partial class BuildingManager : Node
 
 	private bool IsBuildingPlaceableAtArea(Rect2I tileArea)
 	{
+		GD.Print("=== IsBuildingPlaceableAtArea START ===");
 
 		var allTilesBuildable = gridManager.IsTileAreaBuildable(tileArea);
-		return allTilesBuildable && AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
+		GD.Print($"allTilesBuildable: {allTilesBuildable}");
+
+		// Debug resource values
+		GD.Print($"startingResourceCount: {startingResourceCount}");
+		GD.Print($"currentResourceCount: {currentResourceCount}");
+		GD.Print($"currentlyUsedResourceCount: {currentlyUsedResourceCount}");
+
+		GD.Print($"AvailableResourceCount: {AvailableResourceCount}");
+		GD.Print($"Required ResourceCost: {toPlaceBuildingResource.ResourceCost}");
+
+		bool hasEnoughResources = AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
+		GD.Print($"hasEnoughResources: {hasEnoughResources}");
+
+		bool result = allTilesBuildable && hasEnoughResources;
+		GD.Print($"Final result (placeable): {result}");
+
+		GD.Print("=== IsBuildingPlaceableAtArea END ===");
+
+		return result;
 	}
 
 	private void UpdateHoverGridArea()
@@ -221,7 +249,8 @@ public partial class BuildingManager : Node
 
 	private void OnResourceTilesUpdated(int resourceCount)
 	{
-		currentResourceCount = resourceCount;
+		currentlyUsedResourceCount = resourceCount;
+		EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
 	}
 
 	private void OnBuildingResourceSelected(BuildingResource buildingResource)
