@@ -131,6 +131,14 @@ public partial class GridManager : Node
 		hightlightTileMapLayer.Clear();
 	}
 
+	public Vector2I GetMouseGridPosistionWithDimesionOffset(Vector2 dimensions)
+	{
+		var mousePosition = hightlightTileMapLayer.GetGlobalMousePosition() / 64;
+		mousePosition -= dimensions / 2;
+		mousePosition = mousePosition.Round();
+		return new Vector2I((int)mousePosition.X, (int)mousePosition.Y);
+	}
+
 	public Vector2I getMouseGridPosition()
 	{
 		var mousePosition = hightlightTileMapLayer.GetGlobalMousePosition();

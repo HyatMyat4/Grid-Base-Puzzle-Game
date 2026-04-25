@@ -4,3 +4,4 @@
 
 [node name="BuildingManager" type="Node" unique_id=1472844421]
 script = ExtResource("1_qqmbd")
+startingResourceCount = 5

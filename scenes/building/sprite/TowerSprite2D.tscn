@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cmdl5hrnhswlq" path="res://asssets/buildings/Blue Buildings/Tower.png" id="1_v1k1k"]
 
 [node name="TowerSprite2D" type="Sprite2D" unique_id=869889763]
+y_sort_enabled = true
 position = Vector2(64, 102)
 texture = ExtResource("1_v1k1k")
 centered = false

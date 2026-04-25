@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dil0ofaa7rmt0" path="res://scenes/building/Base.tscn" id="3_bhu4a"]
 [ext_resource type="PackedScene" uid="uid://ca5u3t6pdudg" path="res://scenes/leven/util/ElevationLayer.tscn" id="3_xpiny"]
 [ext_resource type="PackedScene" uid="uid://ok3qbl0eu0wc" path="res://scenes/GoldMine.tscn" id="4_e2per"]
+[ext_resource type="PackedScene" uid="uid://corshx277bne4" path="res://scenes/ui/LevenSelectScreen.tscn" id="7_e2per"]
 
 [node name="MainMenu" type="Node" unique_id=678606935]
 script = ExtResource("1_bhu4a")
@@ -64,42 +65,47 @@ position = Vector2(320, 128)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=152361666]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1327195046]
+[node name="MainMenuContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1327195046]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer" unique_id=1863730521]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MainMenuContainer" unique_id=1863730521]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_vjtqc")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/PanelContainer" unique_id=1674633712]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenuContainer/PanelContainer" unique_id=1674633712]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer" unique_id=1968570023]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer" unique_id=1968570023]
 custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="PlayButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1871500755]
+[node name="PlayButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1871500755]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Play"
 
-[node name="OptionsButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=255641730]
+[node name="OptionsButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=255641730]
 layout_mode = 2
 text = "Options"
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1620467026]
+[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1620467026]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
+
+[node name="LevenSelectScreen" parent="CanvasLayer" unique_id=359707773 instance=ExtResource("7_e2per")]
+unique_name_in_owner = true
 
 [editable path="YSortRoot/BaseTerrainTileMapLayer/ElevationLayer"]

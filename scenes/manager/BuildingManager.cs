@@ -31,6 +31,7 @@ public partial class BuildingManager : Node
 	[Signal]
 	public delegate void AvailableResourceCountChangedEventHandler(int availableResourceCount);
 
+
 	private enum State
 	{
 		Normal,
@@ -47,18 +48,27 @@ public partial class BuildingManager : Node
 
 	private BuildingGhost buildingGhost;
 
+	private Godot.Vector2 buildingGhostDimensions;
+
 	private State currentState;
 
 	private int AvailableResourceCount => startingResourceCount + currentResourceCount - currentlyUsedResourceCount;
+
+
 
 
 	public override void _Ready()
 	{
 		gridManager.ResourcetilesUpdated += OnResourceTilesUpdated;
 		gameUI.BuildingResourceSelected += OnBuildingResourceSelected;
-		EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
+		CallDeferred(nameof(EmitInitialResource));
+
 	}
 
+	private void EmitInitialResource()
+	{
+		EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
+	}
 
 	public override void _UnhandledInput(InputEvent evt)
 	{
@@ -92,6 +102,11 @@ public partial class BuildingManager : Node
 
 	}
 
+	public void SetStartingResourceCount(int count)
+	{
+		startingResourceCount = count;
+	}
+
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -99,7 +114,21 @@ public partial class BuildingManager : Node
 
 		if (buildingGhost != null)
 		{
-			var mouseGridPosition = gridManager.getMouseGridPosition();
+
+			Vector2I mouseGridPosition = Vector2I.Zero;
+
+			switch (currentState)
+			{
+				case State.Normal:
+					mouseGridPosition = gridManager.getMouseGridPosition();
+					break;
+				case State.PlacingBuilding:
+					mouseGridPosition = gridManager.GetMouseGridPosistionWithDimesionOffset(buildingGhostDimensions);
+					buildingGhost.GlobalPosition = mouseGridPosition * 64;
+					break;
+			}
+
+
 			var rootCell = hoveredGridArea.Position;
 			if (toPlaceBuildingResource != null && rootCell != mouseGridPosition)
 			{
@@ -109,15 +138,7 @@ public partial class BuildingManager : Node
 
 			}
 
-			switch (currentState)
-			{
-				case State.Normal:
-					break;
-				case State.PlacingBuilding:
 
-					buildingGhost.GlobalPosition = mouseGridPosition * 64;
-					break;
-			}
 		}
 	}
 
@@ -135,19 +156,20 @@ public partial class BuildingManager : Node
 		{
 			buildingGhost.SetInvalid();
 		}
+
+		buildingGhost.DoHoverAnimation();
 	}
 
 	private void PlacedBuildingAtMousePosition()
 	{
 		{
 
-
 			Node2D building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
 			ySortRoot.AddChild(building);
 
 			Vector2I gridPosition = hoveredGridArea.Position;
 			building.GlobalPosition = gridPosition * 64;
-
+			building.GetFirstNodeOfType<BuildingAnimatorComponent>()?.PlayInAnimation();
 
 			currentlyUsedResourceCount += toPlaceBuildingResource.ResourceCost;
 			ChangeState(State.Normal);
@@ -259,8 +281,9 @@ public partial class BuildingManager : Node
 		ChangeState(State.PlacingBuilding);
 		hoveredGridArea.Size = buildingResource.Dimensions;
 		var buildingSprite = buildingResource.SpriteScene.Instantiate<Sprite2D>();
-		buildingGhost.AddChild(buildingSprite);
-
+		buildingGhost.AddSpriteNode(buildingSprite);
+		buildingGhost.SetDimensions(buildingResource.Dimensions);
+		buildingGhostDimensions = buildingResource.Dimensions;
 		toPlaceBuildingResource = buildingResource;
 		updateGridDisplay();
 	}

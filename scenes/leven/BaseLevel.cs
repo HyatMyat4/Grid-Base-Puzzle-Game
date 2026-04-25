@@ -12,11 +12,16 @@ public partial class BaseLevel : Node
 	[Export]
 	private PackedScene levenCompleteScreenScene;
 
+	[Export]
+	private LevenDefinitionResource levenDefinitionResource;
+
 	private GridManager gridManager;
 	private GoldMine goldMine;
 	private GameCamera gameCamera;
 	private Node2D baseBuilding;
 	private TileMapLayer baseTerrainTilemapLayer;
+
+	private BuildingManager buildingManager;
 
 	private GameUI gameUI;
 
@@ -28,9 +33,10 @@ public partial class BaseLevel : Node
 		baseTerrainTilemapLayer = GetNode<TileMapLayer>("%BaseTerrainTileMapLayer");
 		baseBuilding = GetNode<Node2D>("%Base");
 		gameUI = GetNode<GameUI>("GameUI");
+		buildingManager = GetNode<BuildingManager>("BuildingManager");
 		Rect2I usedRect = baseTerrainTilemapLayer.GetUsedRect();
 
-
+		buildingManager.SetStartingResourceCount(levenDefinitionResource.StartingResourceCount);
 		gameCamera.SetBoundingRect(usedRect);
 		gameCamera.CenterOnPosition(baseBuilding.GlobalPosition);
 
@@ -50,3 +56,4 @@ public partial class BaseLevel : Node
 		}
 	}
 }
+

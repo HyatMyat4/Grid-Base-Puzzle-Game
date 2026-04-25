@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://corshx277bne4"]
+
+[ext_resource type="Script" uid="uid://cfx0ou4kbuu7t" path="res://scenes/ui/LevenSelectScreen.cs" id="1_7qo60"]
+[ext_resource type="Theme" uid="uid://bsoo6v6wsrend" path="res://resources/theme.tres" id="1_xwdu7"]
+[ext_resource type="PackedScene" uid="uid://dedikr66re27" path="res://scenes/ui/LevenSelectSection.tscn" id="2_7qo60"]
+
+[node name="LevenSelectScreen" type="MarginContainer" unique_id=359707773]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_7qo60")
+levelSelectSectionScene = ExtResource("2_7qo60")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=672475647]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_xwdu7")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=124575006]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer" unique_id=50990293]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4
+
+[node name="BackButton" type="Button" parent="." unique_id=772323286]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme = ExtResource("1_xwdu7")
+text = "Back"

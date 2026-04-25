@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 
 namespace Game.Autoload;
@@ -8,7 +9,7 @@ public partial class LevenManager : Node
 	public static LevenManager Instance { get; private set; }
 
 	[Export]
-	private PackedScene[] levenScenes;
+	private LevenDefinitionResource[] levenDefinitions;
 
 	private int currentLevelIndex;
 
@@ -23,12 +24,17 @@ public partial class LevenManager : Node
 		}
 	}
 
+	public static LevenDefinitionResource[] GetLevenDefinitions()
+	{
+		return Instance.levenDefinitions.ToArray();
+	}
+
 	public void ChangeToLeven(int levenIndex)
 	{
-		if (levenIndex >= levenScenes?.Length || levenIndex < 0) return;
+		if (levenIndex >= levenDefinitions?.Length || levenIndex < 0) return;
 		currentLevelIndex = levenIndex;
-		var levenScene = levenScenes[currentLevelIndex];
-		GetTree().ChangeSceneToPacked(levenScene);
+		var levenDefinition = levenDefinitions[currentLevelIndex];
+		GetTree().ChangeSceneToFile(levenDefinition.levelScenePath);
 	}
 
 	public void ChangeToNextLevel()

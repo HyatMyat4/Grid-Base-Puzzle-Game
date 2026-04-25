@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LevenDefinitionResource" format=3 uid="uid://c26bsbr82q4va"]
+
+[ext_resource type="Script" uid="uid://dh87gh47xxiqi" path="res://resources/leven/LevenDefinitionResource.cs" id="1_kw0ol"]
+
+[resource]
+script = ExtResource("1_kw0ol")
+Id = "b02"
+StartingResourceCount = 7
+levelScenePath = "uid://p5hgmyn55um8"
+metadata/_custom_type_script = "uid://dh87gh47xxiqi"

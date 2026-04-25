@@ -1,13 +1,20 @@
 [gd_scene format=3 uid="uid://dyipqh8b3b0j3"]
 
 [ext_resource type="PackedScene" uid="uid://cs6j8u31r07so" path="res://scenes/component/BuildingComponent.tscn" id="1_1f6up"]
+[ext_resource type="PackedScene" uid="uid://ctk7av6eyimjk" path="res://scenes/component/BuildingAnimatorComponent.tscn" id="2_0ag0t"]
 [ext_resource type="PackedScene" uid="uid://du5aoddvoigtn" path="res://scenes/building/sprite/TowerSprite2D.tscn" id="2_wos67"]
 
 [node name="Tower" type="Node2D" unique_id=1074383449]
 y_sort_enabled = true
 
 [node name="BuildingComponent" parent="." unique_id=647751282 instance=ExtResource("1_1f6up")]
+y_sort_enabled = true
 buildingResourcePath = "uid://cpojk0lfer4uf"
 
-[node name="TowerSprite2D" parent="." unique_id=869889763 instance=ExtResource("2_wos67")]
-position = Vector2(64, 102)
+[node name="BuildingAnimatorComponent" parent="." unique_id=230703475 instance=ExtResource("2_0ag0t")]
+y_sort_enabled = true
+
+[node name="TowerSprite2D" parent="BuildingAnimatorComponent" unique_id=869889763 instance=ExtResource("2_wos67")]
+y_sort_enabled = true
+position = Vector2(64, 122)
+offset = Vector2(-64, -250)
