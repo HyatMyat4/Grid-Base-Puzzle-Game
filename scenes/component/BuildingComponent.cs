@@ -12,16 +12,36 @@ public partial class BuildingComponent : Node2D
 	[Export(PropertyHint.File, "*tres")]
 	private string buildingResourcePath;
 
+	[Export]
+	private BuildingAnimatorComponent buildingAnimatorComponent;
+
 	private HashSet<Vector2I> occupiedTiles = new();
 
 	public BuildingResource BuildingResource { get; private set; }
 
+	public bool IsDestorying { get; private set; }
+
+
+	public static IEnumerable<BuildingComponent> GetVaildBuildingComponents(Node node)
+	{
+		return node.GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>().Where((buildingComponent) => !buildingComponent.IsDestorying);
+	}
+
+	public static IEnumerable<BuildingComponent> GetDangerBuildingComponents(Node node)
+	{
+		return GetVaildBuildingComponents(node).Where((buildingComponent) => buildingComponent.BuildingResource.IsDangerBuilding());
+	}
 
 	public override void _Ready()
 	{
 		if (buildingResourcePath != null)
 		{
 			BuildingResource = GD.Load<BuildingResource>(buildingResourcePath);
+		}
+
+		if (buildingAnimatorComponent != null)
+		{
+			buildingAnimatorComponent.DestoryAnimationFinished += OnDestoryAnimationFinished;
 		}
 		AddToGroup(nameof(BuildingComponent));
 		Callable.From(Initialize).CallDeferred();
@@ -52,10 +72,23 @@ public partial class BuildingComponent : Node2D
 		return occupiedTiles.ToHashSet();
 	}
 
+	public Rect2I GetTileArea()
+	{
+		var rootCell = GetGridCellPosition();
+		var tileArea = new Rect2I(rootCell, BuildingResource.Dimensions);
+		return tileArea;
+	}
+
 	public void Distory()
 	{
+		IsDestorying = true;
 		GameEvent.EmitBuildingDestroyed(this);
-		Owner.QueueFree();
+		buildingAnimatorComponent?.PlayDestoryAnimation();
+		if (buildingAnimatorComponent == null)
+		{
+			Owner.QueueFree();
+		}
+
 	}
 
 	public bool IsTileInBuildingArea(Vector2I tilePosition)
@@ -67,6 +100,11 @@ public partial class BuildingComponent : Node2D
 	{
 		CalculateOccupiedCellPosition();
 		GameEvent.EmitBuildingPlaced(this);
+	}
+
+	private void OnDestoryAnimationFinished()
+	{
+		Owner.QueueFree();
 	}
 }
 

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://tp7e2uwfj42o" path="res://scenes/manager/BuildManager.tscn" id="2_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://bwmh7y2nhda8" path="res://scenes/manager/GridManager.tscn" id="2_rarhs"]
 [ext_resource type="TileSet" uid="uid://c287lj1rsirew" path="res://resources/highlight_tileset.tres" id="2_rvslj"]
+[ext_resource type="Resource" uid="uid://c26bsbr82q4va" path="res://resources/leven/leven_02.tres" id="3_6m4m6"]
 [ext_resource type="PackedScene" uid="uid://dil0ofaa7rmt0" path="res://scenes/building/Base.tscn" id="3_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://dc61vt57ybecl" path="res://scenes/GameCamera.tscn" id="5_0hixx"]
 [ext_resource type="PackedScene" uid="uid://wiesklnius2x" path="res://scenes/building/BuildingGhost.tscn" id="7_jlsqs"]
@@ -15,6 +16,7 @@
 [node name="BaseLevel" type="Node" unique_id=1917862143]
 script = ExtResource("1_elqb8")
 levenCompleteScreenScene = ExtResource("2_82xep")
+levenDefinitionResource = ExtResource("3_6m4m6")
 
 [node name="GridManager" parent="." unique_id=1190061845 node_paths=PackedStringArray("hightlightTileMapLayer", "baseTerrainTileMapLayer") instance=ExtResource("2_rarhs")]
 hightlightTileMapLayer = NodePath("../YSortRoot/HighlightTileMapLayer")

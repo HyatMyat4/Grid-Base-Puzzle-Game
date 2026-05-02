@@ -256,7 +256,7 @@ scripts/
   WindowsBase.dll
 
 [analyzerReferences]
-../../../usr/local/share/dotnet/sdk/10.0.103/Sdks/Microsoft.NET.Sdk/analyzers/
+<DOTNET>/sdk/10.0.103/Sdks/Microsoft.NET.Sdk/analyzers/
  Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
  Microsoft.CodeAnalysis.NetAnalyzers.dll
 <NUGET>/
@@ -270,6 +270,6 @@ scripts/
   System.Text.RegularExpressions.Generator.dll
 
 [analyzerConfigFiles]
-../../../usr/local/share/dotnet/sdk/10.0.103/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig
 .editorconfig
 .godot/mono/temp/obj/Debug/GridBase Puzzle.GeneratedMSBuildEditorConfig.editorconfig
+<DOTNET>/sdk/10.0.103/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig

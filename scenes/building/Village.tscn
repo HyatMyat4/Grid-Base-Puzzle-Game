@@ -7,8 +7,9 @@
 [node name="Village" type="Node2D" unique_id=297312944]
 y_sort_enabled = true
 
-[node name="BuildingComponent" parent="." unique_id=647751282 instance=ExtResource("1_4iy7f")]
+[node name="BuildingComponent" parent="." unique_id=647751282 node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_4iy7f")]
 buildingResourcePath = "uid://ji28p8kg2m1w"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
 
 [node name="BuildingAnimatorComponent" parent="." unique_id=230703475 instance=ExtResource("2_aht71")]
 

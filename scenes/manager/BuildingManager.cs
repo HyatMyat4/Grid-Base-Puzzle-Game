@@ -145,11 +145,35 @@ public partial class BuildingManager : Node
 	private void updateGridDisplay()
 	{
 		gridManager.ClearHighlightedTiles();
-		gridManager.HightlightBuildableTiles();
+
+		if (toPlaceBuildingResource.IsAttackBuilding())
+		{
+			gridManager.HighlightGoblinOccupiedTiles();
+			gridManager.HightlightBuildableTiles();
+		}
+		else
+		{
+			gridManager.HightlightBuildableTiles();
+			gridManager.HighlightGoblinOccupiedTiles();
+		}
+
+
+
 		if (IsBuildingPlaceableAtArea(hoveredGridArea))
 		{
-			gridManager.HightlightExpandedBuildableTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
+
+			if (toPlaceBuildingResource.IsAttackBuilding())
+			{
+				gridManager.HightlightAttackTiles(hoveredGridArea, toPlaceBuildingResource.AttackRadius);
+			}
+			else
+			{
+				gridManager.HightlightExpandedBuildableTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
+			}
+
 			gridManager.HightlightResourceTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
+
+
 			buildingGhost.SetValid();
 		}
 		else
@@ -182,10 +206,12 @@ public partial class BuildingManager : Node
 	{
 
 		var rootCell = hoveredGridArea.Position;
-		var buildingComponent = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>().FirstOrDefault((buildingComponent) =>
+		var buildingComponent = BuildingComponent.GetVaildBuildingComponents(this).FirstOrDefault((buildingComponent) =>
 		{
 			return buildingComponent.BuildingResource.IsDeletable && buildingComponent.IsTileInBuildingArea(rootCell);
 		});
+
+
 		if (buildingComponent == null) return;
 
 		currentResourceCount += buildingComponent.BuildingResource.ResourceCost;
@@ -207,29 +233,19 @@ public partial class BuildingManager : Node
 
 	private bool IsBuildingPlaceableAtArea(Rect2I tileArea)
 	{
-		GD.Print("=== IsBuildingPlaceableAtArea START ===");
 
-		var allTilesBuildable = gridManager.IsTileAreaBuildable(tileArea);
-		GD.Print($"allTilesBuildable: {allTilesBuildable}");
-
-		// Debug resource values
-		GD.Print($"startingResourceCount: {startingResourceCount}");
-		GD.Print($"currentResourceCount: {currentResourceCount}");
-		GD.Print($"currentlyUsedResourceCount: {currentlyUsedResourceCount}");
-
-		GD.Print($"AvailableResourceCount: {AvailableResourceCount}");
-		GD.Print($"Required ResourceCost: {toPlaceBuildingResource.ResourceCost}");
+		var isattacktiles = toPlaceBuildingResource.IsAttackBuilding();
+		var allTilesBuildable = gridManager.IsTileAreaBuildable(tileArea, isattacktiles);
 
 		bool hasEnoughResources = AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
-		GD.Print($"hasEnoughResources: {hasEnoughResources}");
 
 		bool result = allTilesBuildable && hasEnoughResources;
-		GD.Print($"Final result (placeable): {result}");
-
-		GD.Print("=== IsBuildingPlaceableAtArea END ===");
 
 		return result;
 	}
+
+
+
 
 	private void UpdateHoverGridArea()
 	{

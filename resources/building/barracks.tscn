@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dpgl5ma1xf7ii"]
+
+[ext_resource type="PackedScene" uid="uid://cs6j8u31r07so" path="res://scenes/component/BuildingComponent.tscn" id="1_8n31l"]
+[ext_resource type="PackedScene" uid="uid://ctk7av6eyimjk" path="res://scenes/component/BuildingAnimatorComponent.tscn" id="2_22c3r"]
+[ext_resource type="PackedScene" uid="uid://bfmc7snc7j2pe" path="res://scenes/building/sprite/BarracksSprite2d.tscn" id="3_8n31l"]
+
+[node name="Barracks" type="Node2D" unique_id=1770155703]
+y_sort_enabled = true
+
+[node name="BuildingComponent" parent="." unique_id=647751282 node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_8n31l")]
+buildingResourcePath = "uid://b4i2sbiw7omg8"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
+
+[node name="BuildingAnimatorComponent" parent="." unique_id=230703475 instance=ExtResource("2_22c3r")]
+
+[node name="BarracksSprite2D" parent="BuildingAnimatorComponent" unique_id=133252919 instance=ExtResource("3_8n31l")]
+position = Vector2(164, 113)

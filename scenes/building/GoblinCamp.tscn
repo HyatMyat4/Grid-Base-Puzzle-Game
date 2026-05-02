@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://db57p5faro5rv"]
+
+[ext_resource type="PackedScene" uid="uid://cs6j8u31r07so" path="res://scenes/component/BuildingComponent.tscn" id="1_ilohv"]
+[ext_resource type="PackedScene" uid="uid://ctk7av6eyimjk" path="res://scenes/component/BuildingAnimatorComponent.tscn" id="2_hfat6"]
+[ext_resource type="Texture2D" uid="uid://3f6swdhsel82" path="res://asssets/buildings/Wood_Tower_Red.png" id="3_pch1o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7130i"]
+atlas = ExtResource("3_pch1o")
+region = Rect2(0, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvc5i"]
+atlas = ExtResource("3_pch1o")
+region = Rect2(256, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m75g8"]
+atlas = ExtResource("3_pch1o")
+region = Rect2(512, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seecf"]
+atlas = ExtResource("3_pch1o")
+region = Rect2(768, 0, 256, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ugxn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7130i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvc5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m75g8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_seecf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="GoblinCamp" type="Node2D" unique_id=1523389667]
+
+[node name="BuildingComponent" parent="." unique_id=647751282 node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_ilohv")]
+buildingResourcePath = "uid://d1r33w3kn726d"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
+
+[node name="BuildingAnimatorComponent" parent="." unique_id=230703475 instance=ExtResource("2_hfat6")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=506921372]
+position = Vector2(64, 96)
+sprite_frames = SubResource("SpriteFrames_8ugxn")
+autoplay = "default"
+frame_progress = 0.187168
+centered = false
+offset = Vector2(-128, -160)

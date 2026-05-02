@@ -7,14 +7,13 @@
 [node name="Tower" type="Node2D" unique_id=1074383449]
 y_sort_enabled = true
 
-[node name="BuildingComponent" parent="." unique_id=647751282 instance=ExtResource("1_1f6up")]
+[node name="BuildingComponent" parent="." unique_id=647751282 node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_1f6up")]
 y_sort_enabled = true
 buildingResourcePath = "uid://cpojk0lfer4uf"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
 
 [node name="BuildingAnimatorComponent" parent="." unique_id=230703475 instance=ExtResource("2_0ag0t")]
-y_sort_enabled = true
 
 [node name="TowerSprite2D" parent="BuildingAnimatorComponent" unique_id=869889763 instance=ExtResource("2_wos67")]
-y_sort_enabled = true
 position = Vector2(64, 122)
 offset = Vector2(-64, -250)

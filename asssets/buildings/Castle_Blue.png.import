@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lbndx1yqtf5b"
-path="res://.godot/imported/highlight_tile.png-fb7a05b82494121ebb90794b9b1a695a.ctex"
+uid="uid://cvickxv3t5r14"
+path="res://.godot/imported/Castle_Blue.png-8b43ff389e20f4a12f1f4fb6ff63b987.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asssets/tiles/highlight_tile.png"
-dest_files=["res://.godot/imported/highlight_tile.png-fb7a05b82494121ebb90794b9b1a695a.ctex"]
+source_file="res://asssets/buildings/Castle_Blue.png"
+dest_files=["res://.godot/imported/Castle_Blue.png-8b43ff389e20f4a12f1f4fb6ff63b987.ctex"]
 
 [params]
 

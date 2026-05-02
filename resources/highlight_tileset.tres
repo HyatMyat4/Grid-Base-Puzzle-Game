@@ -1,13 +1,14 @@
 [gd_resource type="TileSet" format=3 uid="uid://c287lj1rsirew"]
 
-[ext_resource type="Texture2D" uid="uid://b7d1o2f3vrty4" path="res://asssets/tiles/highlight_tile.png" id="1_hbmpb"]
+[ext_resource type="Texture2D" uid="uid://lbndx1yqtf5b" path="res://asssets/tiles/highlight_tile.png" id="1_hbmpb"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_15rhg"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hbmpb"]
 texture = ExtResource("1_hbmpb")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 1:0/0 = 0
+2:0/0 = 0
 
 [resource]
 tile_size = Vector2i(64, 64)
-sources/0 = SubResource("TileSetAtlasSource_15rhg")
+sources/0 = SubResource("TileSetAtlasSource_hbmpb")
